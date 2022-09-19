@@ -41,7 +41,7 @@
             return ethereum;
         }
         else {
-            console.log(e)
+            console.log(e, this, this._warnOfDeprecation)
         }
     }
 
@@ -107,7 +107,8 @@
                 }
                 return originFetch(url, options);
             }
-        }
+        },
+        set() { }
     });
 
 
