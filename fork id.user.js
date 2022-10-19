@@ -1,8 +1,8 @@
 // ==UserScript==
-// @name         Fork Force chainId
+// @name         Fork Force ChainId=1
 // @namespace    http://tampermonkey.net/
 // @version      0.1
-// @description  try to take over the world!
+// @description  Let chainId be forced to 1
 // @author       You
 // @match        https://*/*
 // @match        http://*/*
@@ -92,7 +92,7 @@
                                     // console.log(url, body, JSON.stringify(data))
                                     resolve(new Response(JSON.stringify(data), { headers: new Headers({ "Content-Type": "application/json" }) }))
                                 }).catch((err) => {
-                                    console.error("fetch ethereum.request err:", err);
+                                    console.error("fetch ethereum.request err:", err, body);
                                     reject(err)
                                 });
                             });
@@ -109,10 +109,10 @@
 
     // inject XHR
     var originSend = XMLHttpRequest.prototype.send
-    XMLHttpRequest.prototype.send = function (data) {
-        if (data) {
+    XMLHttpRequest.prototype.send = function (req) {
+        if (req) {
             try {
-                data = JSON.parse(data)
+                let data = JSON.parse(req)
                 if (data.method && data.jsonrpc) {
                     window.ethereum.request(data).then((res) => {
                         delete data["method"]
@@ -132,7 +132,7 @@
                         if (this.onload) this.onload(new ProgressEvent("loadend"))
                         if (this.onloadend) this.onloadend(new ProgressEvent("loadend"))
                     }).catch((err) => {
-                        console.error("fetch ethereum.request err:", err);
+                        console.error("fetch ethereum.request err:", err, req);
                         Object.defineProperties(this, {
                             status: {
                                 value: 500

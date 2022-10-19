@@ -41,7 +41,16 @@
     }
 
     if (location.pathname.indexOf("/tx/") >= 0) {
+
         let blockNum = $(selectors[location.host].block + " > a").text();
+        if (!blockNum) {
+            let bn = $(selectors[location.host].block).text().trim()
+            if (bn.indexOf("Pending") > 0) {
+                setTimeout(() => location.href = location.href, 1000)
+            } else if (bn.length > 0) {
+                setTimeout(() => location.href = location.href, 100)
+            }
+        }
         let txHash = $("#spanTxHash").text()
 
         let txUrl = `/txs?block=${blockNum}&ps=100&p=1#${txHash}`

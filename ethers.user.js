@@ -2,7 +2,7 @@
 // @name         ethers.js inject
 // @namespace    http://tampermonkey.net/
 // @version      0.1
-// @description  try to take over the world!
+// @description  inject ethers.js to the page
 // @author       You
 // @match        https://*/*
 // @match        http://*/*
